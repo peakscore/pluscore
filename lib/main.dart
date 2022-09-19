@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: const FirstPage(title: '+score'),
+      home: const FirstPage(title: '+Score'),
     );
   }
 }
@@ -68,8 +68,8 @@ class FirstPage extends StatelessWidget {
 class SecondPage extends StatelessWidget {
   final TextEditingController _textFieldController = TextEditingController();
   final String title;
-  SecondPage({Key? key, required this.title}) : super(key: key);
-
+ SecondPage({Key? key, required this.title}) : super(key: key);
+ 
   _displayDialog(BuildContext context) async {
     return showDialog(
         context: context,
@@ -84,12 +84,12 @@ class SecondPage extends StatelessWidget {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Submit'),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                 Navigator.pop(context);
                 },
-              )
-            ],
+                child: const Text('Submit')), 
+                
+              ]
           );
         });
   }
@@ -100,20 +100,21 @@ class SecondPage extends StatelessWidget {
         appBar: AppBar(
           title: Text(title),
         ),
-        body: Center(
-          child: Column(
+        body: Column(
             children: <Widget>[
-              TextButton(
-                onPressed: () => {_displayDialog(context)},
-                child: const Text('Dream Grade'),
+              TextButton(                
+                onPressed: () { 
+                  _displayDialog(context);},
+                child: const Text('Dream Grade'),     
               ),
               TextButton(
                 onPressed: () => {_displayDialog(context)},
                 child: const Text('Real Grade'),
               ),
+              //Text( _textFieldController.text)
             ],
           ),
-        ));
+        );
   }
 }
 
