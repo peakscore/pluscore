@@ -87,7 +87,7 @@ class SecondPage extends StatelessWidget {
   final TextEditingController _textFieldController = TextEditingController();
   final String title;
  SecondPage({Key? key, required this.title}) : super(key: key);
- 
+  
   _displayDialog(BuildContext context) async {
     return showDialog(
         context: context,
@@ -103,14 +103,30 @@ class SecondPage extends StatelessWidget {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                 Navigator.pop(context);
-                },
+                 _navigateAndDisplaySelection(context);},
+                 //Navigator.pop(context);},
                 child: const Text('Submit')), 
                 
               ]
           );
         });
   }
+ Future<void> _navigateAndDisplaySelection(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SecondPage(title: 'Exam 1',)),
+    );
+  // When a BuildContext is used from a StatefulWidget, the mounted property
+  // must be checked after an asynchronous gap.
+  //if (!mounted) return;
+  // After the Selection Screen returns a result, hide any previous snackbars
+  // and show the new result.
+  ScaffoldMessenger.of(context)
+    ..removeCurrentSnackBar()
+    ..showSnackBar(SnackBar(content: Text('$result')));
+}
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +138,7 @@ class SecondPage extends StatelessWidget {
             children: <Widget>[
               TextButton(                
                 onPressed: () { 
-                  _displayDialog(context);},
+                 _displayDialog(context);},                  
                 child: const Text('Dream Grade'),     
               ),
               TextButton(
@@ -134,6 +150,7 @@ class SecondPage extends StatelessWidget {
           ),
         );
   }
+ 
 }
 
 class ThirdPage extends StatelessWidget {
