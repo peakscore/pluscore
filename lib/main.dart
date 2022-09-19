@@ -2,6 +2,8 @@
 
 // neuer Kommentar
 
+//import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -55,8 +57,24 @@ class FirstPage extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        //onPressed : onPressed.call(){},
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+      //FlatButton(
+      //child: new Text('Flat Button'),
+      //onPressed: () {},
+      //)
+      //MaterialButton(
+      // minWidth: 200.16,
+      // height: 40.47,
+      // onPressed: () {},
+      // color: Colors.lightBlue,
+      //  child: Text('Material Button', style: TextStyle(color: Colors.white)),
+      //),
       //floatingActionButton: FloatingActionButton(
-
       //onPressed:
       //tooltip: 'Increment',
       //child: const Icon(Icons.add),
