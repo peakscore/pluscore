@@ -86,71 +86,74 @@ class FirstPage extends StatelessWidget {
 class SecondPage extends StatelessWidget {
   final TextEditingController _textFieldController = TextEditingController();
   final String title;
- SecondPage({Key? key, required this.title}) : super(key: key);
-  
+  SecondPage({Key? key, required this.title}) : super(key: key);
+
   _displayDialog(BuildContext context) async {
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Enter Grade'),
-            content: TextField(
-              controller: _textFieldController,
-              textInputAction: TextInputAction.go,
-              keyboardType: const TextInputType.numberWithOptions(),
-              //decoration: const InputDecoration(hintText: "Enter your number"),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                 _navigateAndDisplaySelection(context);},
-                 //Navigator.pop(context);},
-                child: const Text('Submit')), 
-                
-              ]
-          );
+              title: const Text('Enter Grade'),
+              content: TextField(
+                controller: _textFieldController,
+                textInputAction: TextInputAction.go,
+                keyboardType: const TextInputType.numberWithOptions(),
+                //decoration: const InputDecoration(hintText: "Enter your number"),
+              ),
+              actions: <Widget>[
+                TextButton(
+                    onPressed: () {
+                      _navigateAndDisplaySelection(context);
+                    },
+                    //Navigator.pop(context);},
+                    child: const Text('Submit')),
+              ]);
         });
   }
- Future<void> _navigateAndDisplaySelection(BuildContext context) async {
+
+  Future<void> _navigateAndDisplaySelection(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SecondPage(title: 'Exam 1',)),
+      MaterialPageRoute(
+          builder: (context) => SecondPage(
+                title: 'Exam 1',
+              )),
     );
-  // When a BuildContext is used from a StatefulWidget, the mounted property
-  // must be checked after an asynchronous gap.
-  //if (!mounted) return;
-  // After the Selection Screen returns a result, hide any previous snackbars
-  // and show the new result.
-  ScaffoldMessenger.of(context)
-    ..removeCurrentSnackBar()
-    ..showSnackBar(SnackBar(content: Text('$result')));
-}
+    // When a BuildContext is used from a StatefulWidget, the mounted property
+    // must be checked after an asynchronous gap.
+    //if (!mounted) return;
+    // After the Selection Screen returns a result, hide any previous snackbars
+    // and show the new result.
+    ScaffoldMessenger.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text('$result')));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: Column(
-            children: <Widget>[
-              TextButton(                
-                onPressed: () { 
-                 _displayDialog(context);},                  
-                child: const Text('Dream Grade'),     
-              ),
-              TextButton(
-                onPressed: () => {_displayDialog(context)},
-                child: const Text('Real Grade'),
-              ),
-              //Text( _textFieldController.text)
-            ],
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: Column(
+        children: <Widget>[
+          TextButton(
+            onPressed: () {
+              _displayDialog(context);
+            },
+            child: const Text('Dream Grade'),
           ),
-        );
+          TextButton(
+            onPressed: () => {_displayDialog(context)},
+            child: const Text('Real Grade'),
+          ),
+          //Text( _textFieldController.text)
+        ],
+      ),
+    );
   }
- 
 }
 
 class ThirdPage extends StatelessWidget {
