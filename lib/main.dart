@@ -86,8 +86,16 @@ class FirstPage extends StatelessWidget {
 class SecondPage extends StatelessWidget {
   final TextEditingController _textFieldController = TextEditingController();
   final String title;
+  String my_grade = '';
  SecondPage({Key? key, required this.title}) : super(key: key);
-  
+  // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    // final result = await Navigator.push(
+    //   context,
+    //   // Create the SelectionScreen in the next step.
+    //   MaterialPageRoute(builder: (context) => const SelectionScreen()),
+    // );
+
   _displayDialog(BuildContext context) async {
     return showDialog(
         context: context,
@@ -103,30 +111,17 @@ class SecondPage extends StatelessWidget {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                 _navigateAndDisplaySelection(context);},
-                 //Navigator.pop(context);},
+                  my_grade = _textFieldController.text;
+                 //_navigateAndDisplaySelection(context);},
+                 Navigator.pop(context);},
                 child: const Text('Submit')), 
+                // how can i output the value of my_grade in a Text widget?
+                Text(my_grade),
                 
               ]
           );
         });
   }
- Future<void> _navigateAndDisplaySelection(BuildContext context) async {
-    // Navigator.push returns a Future that completes after calling
-    // Navigator.pop on the Selection Screen.
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SecondPage(title: 'Exam 1',)),
-    );
-  // When a BuildContext is used from a StatefulWidget, the mounted property
-  // must be checked after an asynchronous gap.
-  //if (!mounted) return;
-  // After the Selection Screen returns a result, hide any previous snackbars
-  // and show the new result.
-  ScaffoldMessenger.of(context)
-    ..removeCurrentSnackBar()
-    ..showSnackBar(SnackBar(content: Text('$result')));
-}
 
   @override
   Widget build(BuildContext context) {
