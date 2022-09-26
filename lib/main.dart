@@ -49,7 +49,7 @@ class FirstPage extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ThirdPage(title: 'Exam 2');
+                  return const _ThirdPage(title: 'Exam 2');
                 }));
               },
               child: const Text('Exam 2'),
@@ -112,7 +112,7 @@ class SecondPageState extends State<_SecondPage> {
 
               setState(() => dreamGrade = double.parse(result));
             },
-            child: const Text('Dream Grade'),
+            child: Text('Dream Grade: $dreamGrade'),
           ),
           TextButton(
             onPressed: () async {
@@ -123,10 +123,8 @@ class SecondPageState extends State<_SecondPage> {
 
               setState(() => actualGrade = double.parse(result));
             },
-            child: const Text('Real Grade'),
+            child: Text('Real Grade: $actualGrade'),
           ),
-          Text("Dream Grade: $dreamGrade"),
-          Text("Actual Grade: $actualGrade")
         ],
       ),
     );
@@ -146,7 +144,6 @@ class GradeWidget extends StatelessWidget {
         controller: _textFieldController,
         textInputAction: TextInputAction.go,
         keyboardType: const TextInputType.numberWithOptions(),
-        //decoration: const InputDecoration(hintText: "Enter your number"),
       ),
       actions: <Widget>[
         TextButton(
@@ -160,54 +157,50 @@ class GradeWidget extends StatelessWidget {
   }
 }
 
-class ThirdPage extends StatelessWidget {
-  final TextEditingController _textFieldController = TextEditingController();
+class _ThirdPage extends StatefulWidget {
   final String title;
-  ThirdPage({Key? key, required this.title}) : super(key: key);
+  const _ThirdPage({Key? key, required this.title}) : super(key: key);
 
-  _displayDialog(BuildContext context) async {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Enter Grade'),
-            content: TextField(
-              controller: _textFieldController,
-              textInputAction: TextInputAction.go,
-              keyboardType: const TextInputType.numberWithOptions(),
-              //decoration: const InputDecoration(hintText: "Enter your number"),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('Submit'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        });
-  }
+  @override
+  State<StatefulWidget> createState() => ThirdPageState();
+}
+
+class ThirdPageState extends State<_ThirdPage> {
+  double? dreamGrade;
+  double? actualGrade;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              TextButton(
-                onPressed: () => {_displayDialog(context)},
-                child: const Text('Dream Grade'),
-              ),
-              TextButton(
-                onPressed: () => {_displayDialog(context)},
-                child: const Text('Real Grade'),
-              ),
-            ],
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Column(
+        children: <Widget>[
+          TextButton(
+            onPressed: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GradeWidget()),
+              );
+
+              setState(() => dreamGrade = double.parse(result));
+            },
+            child: Text('Dream Grade: $dreamGrade'),
           ),
-        ));
+          TextButton(
+            onPressed: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GradeWidget()),
+              );
+
+              setState(() => actualGrade = double.parse(result));
+            },
+            child: Text('Real Grade: $actualGrade'),
+          ),
+        ],
+      ),
+    );
   }
 }
