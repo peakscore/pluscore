@@ -124,8 +124,14 @@ class SecondPageState extends State<_SecondPage> {
               setState(() => actualGrade = double.parse(result));
             },
             child: Text('Real Grade: $actualGrade'),
-          ),
-        ],
+          ), 
+
+          if(actualGrade !< 4)...[
+        Image.asset("lib/imagen/pass.png")
+    ]else...[
+      
+      ],  
+      ]
       ),
     );
   }
