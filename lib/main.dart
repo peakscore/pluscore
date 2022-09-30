@@ -134,14 +134,13 @@ class SecondPageState extends State<_SecondPage> {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  //error does not matter because no 0 :)
                   if (actualGrade! < 4) {
                     return Image.asset('pea4.jpg');
                   } else if (actualGrade! < dreamGrade!) {
                     return Image.asset('pea4D.jpg');
-                  } else if (actualGrade != dreamGrade!) {
+                  } else if (actualGrade == dreamGrade) {
                     return Image.asset("peaD.jpg");
-                  } else if (actualGrade! > dreamGrade!) {
+                  } else {
                     return Image.asset("peacock.jpg");
                   }
                 });
@@ -209,35 +208,55 @@ class ThirdPageState extends State<_ThirdPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Column(
-        children: <Widget>[
-          TextButton(
-            onPressed: () async {
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => GradeWidget()),
-              );
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: Column(
+          children: <Widget>[
+            TextButton(
+              onPressed: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GradeWidget()),
+                );
 
-              setState(() => dreamGrade = double.parse(result));
-            },
-            child: Text('Dream Grade: $dreamGrade'),
-          ),
-          TextButton(
-            onPressed: () async {
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => GradeWidget()),
-              );
+                setState(() => dreamGrade = double.parse(result));
+              },
+              child: Text('Dream Grade: $dreamGrade'),
+            ),
+            TextButton(
+              onPressed: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GradeWidget()),
+                );
 
-              setState(() => actualGrade = double.parse(result));
-            },
-            child: Text('Real Grade: $actualGrade'),
-          ),
-        ],
-      ),
-    );
+                setState(() => actualGrade = double.parse(result));
+              },
+              child: Text('Real Grade: $actualGrade'),
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  if (actualGrade! < 4) {
+                    return Image.asset('pea4.jpg');
+                  } else if (actualGrade! < dreamGrade!) {
+                    return Image.asset('pea4D.jpg');
+                  } else if (actualGrade == dreamGrade) {
+                    return Image.asset("peaD.jpg");
+                  } else {
+                    return Image.asset("peacock.jpg");
+                  }
+                });
+          },
+
+          //content: Text('Thank You')
+          //getPermission();
+          //else {
+        ));
   }
 }
