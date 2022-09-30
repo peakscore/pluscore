@@ -133,10 +133,15 @@ class SecondPageState extends State<_SecondPage> {
           onPressed: () {
             showDialog(
                 context: context,
-                builder: (BuildContext context) => Image.asset('peacock.jpg'));
+                builder: (BuildContext context) =>
+                    if(actualGrade! < 4) {Image.asset("pea4.jpg");
+                    };
+            );
+          },
+            
             //content: Text('Thank You')
             //getPermission();
-          }, //else {
+           //else {
         ));
     //title: column(
     //+texto)
