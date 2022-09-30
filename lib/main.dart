@@ -98,62 +98,60 @@ class SecondPageState extends State<_SecondPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Column(
-        children: <Widget>[
-          TextButton(
-            onPressed: () async {
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => GradeWidget()),
-              );
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: Column(
+          children: <Widget>[
+            TextButton(
+              onPressed: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GradeWidget()),
+                );
 
-              setState(() => dreamGrade = double.parse(result));
-            },
-            child: Text('Dream Grade: $dreamGrade'),
-          ),
-          TextButton(
-            onPressed: () async {
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => GradeWidget()),
-              );
+                setState(() => dreamGrade = double.parse(result));
+              },
+              child: Text('Dream Grade: $dreamGrade'),
+            ),
+            TextButton(
+              onPressed: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GradeWidget()),
+                );
 
-              setState(() => actualGrade = double.parse(result));
-            },
-            child: Text('Real Grade: $actualGrade'),
-          ),
-          //if (actualGrade! < 4) ...[Image.asset("lib/imagen/pass.png")]
-          //else...[],
-        ],
-      ),
-    floatingActionButton: FloatingActionButton(
-      onPressed: () {
-     
-      //content: Text('Thank You')
-      //getPermission();
-       }, //else {
-      showDialog(context: context, builder: (BuildContext context) {
-        if (actualGrade! < 4)...;{const AssetImage('peacock.jpg'); }}),;
-      
-      //title: column(
-       //+texto)
-      //content: Text('Thank You2'),
-      //);
-      //);
-       }
-      },
-      tooltip: 'Calculate',
-      child: const Icon(Icons.calculate),
-      //onPressed: () {
-      //  if (actualGrade! < 4) //...[Image.asset("lib/imagen/pass.png")]
+                setState(() => actualGrade = double.parse(result));
+              },
+              child: Text('Real Grade: $actualGrade'),
+            ),
+            //if (actualGrade! < 4) ...[Image.asset("lib/imagen/pass.png")]
+            //else...[],
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => Image.asset('peacock.jpg'));
+            //content: Text('Thank You')
+            //getPermission();
+          }, //else {
+        ));
+    //title: column(
+    //+texto)
+    //content: Text('Thank You2'),
+    //);
+    //);
+    tooltip:
+    'Calculate';
+    child:
+    const Icon(Icons.calculate);
+    //onPressed: () {
+    //  if (actualGrade! < 4) //...[Image.asset("lib/imagen/pass.png")]
 
-      //onPressed : onPressed.call(){},
-      /////),
-    )
-    );
+    //onPressed : onPressed.call(){},
+    /////),}
   }
 }
 
