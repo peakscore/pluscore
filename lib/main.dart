@@ -131,14 +131,15 @@ class SecondPageState extends State<_SecondPage> {
       ),
     floatingActionButton: FloatingActionButton(
       onPressed: () {
-      if (actualGrade! < 4)...{new Image.asset('assets/image.jpeg')
+     
       //content: Text('Thank You')
       //getPermission();
-       } //else {
-      //showDialog(context: context,
-      //builder: BuildContext()
+       }, //else {
+      showDialog(context: context, builder: (BuildContext context) {
+        if (actualGrade! < 4)...;{const AssetImage('peacock.jpg'); }}),;
+      
       //title: column(
-       print('Hi1'); //+texto)
+       //+texto)
       //content: Text('Thank You2'),
       //);
       //);
