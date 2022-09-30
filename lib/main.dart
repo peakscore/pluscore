@@ -41,7 +41,7 @@ class FirstPage extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return SecondPage(title: 'Exam 1');
+                  return const _SecondPage(title: 'Exam 1');
                 }));
               },
               child: const Text('Exam 1'),
@@ -49,7 +49,7 @@ class FirstPage extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ThirdPage(title: 'Exam 2');
+                  return const _ThirdPage(title: 'Exam 2');
                 }));
               },
               child: const Text('Exam 2'),
@@ -83,119 +83,149 @@ class FirstPage extends StatelessWidget {
   }
 }
 
-class SecondPage extends StatelessWidget {
-  final TextEditingController _textFieldController = TextEditingController();
+class _SecondPage extends StatefulWidget {
   final String title;
-  String my_grade = '';
- SecondPage({Key? key, required this.title}) : super(key: key);
-  // Navigator.push returns a Future that completes after calling
-    // Navigator.pop on the Selection Screen.
-    // final result = await Navigator.push(
-    //   context,
-    //   // Create the SelectionScreen in the next step.
-    //   MaterialPageRoute(builder: (context) => const SelectionScreen()),
-    // );
-
-  _displayDialog(BuildContext context) async {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Enter Grade'),
-            content: TextField(
-              controller: _textFieldController,
-              textInputAction: TextInputAction.go,
-              keyboardType: const TextInputType.numberWithOptions(),
-              //decoration: const InputDecoration(hintText: "Enter your number"),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  my_grade = _textFieldController.text;
-                 //_navigateAndDisplaySelection(context);},
-                 Navigator.pop(context);},
-                child: const Text('Submit')), 
-                // how can i output the value of my_grade in a Text widget?
-                Text(my_grade),
-                
-              ]
-          );
-        });
-  }
+  const _SecondPage({Key? key, required this.title}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: Column(
-            children: <Widget>[
-              TextButton(                
-                onPressed: () { 
-                 _displayDialog(context);},                  
-                child: const Text('Dream Grade'),     
-              ),
-              TextButton(
-                onPressed: () => {_displayDialog(context)},
-                child: const Text('Real Grade'),
-              ),
-              //Text( _textFieldController.text)
-            ],
-          ),
-        );
-  }
- 
+  State<StatefulWidget> createState() => SecondPageState();
 }
 
-class ThirdPage extends StatelessWidget {
-  final TextEditingController _textFieldController = TextEditingController();
-  final String title;
-  ThirdPage({Key? key, required this.title}) : super(key: key);
-
-  _displayDialog(BuildContext context) async {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Enter Grade'),
-            content: TextField(
-              controller: _textFieldController,
-              textInputAction: TextInputAction.go,
-              keyboardType: const TextInputType.numberWithOptions(),
-              //decoration: const InputDecoration(hintText: "Enter your number"),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('Submit'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        });
-  }
+class SecondPageState extends State<_SecondPage> {
+  double? dreamGrade;
+  double? actualGrade;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              TextButton(
-                onPressed: () => {_displayDialog(context)},
-                child: const Text('Dream Grade'),
-              ),
-              TextButton(
-                onPressed: () => {_displayDialog(context)},
-                child: const Text('Real Grade'),
-              ),
-            ],
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Column(
+        children: <Widget>[
+          TextButton(
+            onPressed: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GradeWidget()),
+              );
+
+              setState(() => dreamGrade = double.parse(result));
+            },
+            child: Text('Dream Grade: $dreamGrade'),
           ),
-        ));
+          TextButton(
+            onPressed: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GradeWidget()),
+              );
+
+              setState(() => actualGrade = double.parse(result));
+            },
+            child: Text('Real Grade: $actualGrade'),
+          ),
+          //if (actualGrade! < 4) ...[Image.asset("lib/imagen/pass.png")]
+          //else...[],
+        ],
+      ),
+    floatingActionButton: FloatingActionButton(
+      onPressed: () {
+      if (actualGrade! < 4)...[new Image.asset('assets/image.jpeg')
+      //content: Text('Thank You')
+      //getPermission();
+       ] else {
+      //showDialog(context: context,
+      //builder: BuildContext()
+      //title: column(
+       print('Hi1'); //+texto)
+      //content: Text('Thank You2'),
+      //);
+      //);
+       }
+      },
+      tooltip: 'Calculate',
+      child: const Icon(Icons.calculate),
+      //onPressed: () {
+      //  if (actualGrade! < 4) //...[Image.asset("lib/imagen/pass.png")]
+
+      //onPressed : onPressed.call(){},
+      /////),
+    )
+    );
+  }
+}
+
+class GradeWidget extends StatelessWidget {
+  final TextEditingController _textFieldController = TextEditingController();
+
+  GradeWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Enter Grade'),
+      content: TextField(
+        controller: _textFieldController,
+        textInputAction: TextInputAction.go,
+        keyboardType: const TextInputType.numberWithOptions(),
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: const Text('Submit'),
+          onPressed: () {
+            Navigator.of(context).pop(_textFieldController.text);
+          },
+        )
+      ],
+    );
+  }
+}
+
+class _ThirdPage extends StatefulWidget {
+  final String title;
+  const _ThirdPage({Key? key, required this.title}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => ThirdPageState();
+}
+
+class ThirdPageState extends State<_ThirdPage> {
+  double? dreamGrade;
+  double? actualGrade;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Column(
+        children: <Widget>[
+          TextButton(
+            onPressed: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GradeWidget()),
+              );
+
+              setState(() => dreamGrade = double.parse(result));
+            },
+            child: Text('Dream Grade: $dreamGrade'),
+          ),
+          TextButton(
+            onPressed: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GradeWidget()),
+              );
+
+              setState(() => actualGrade = double.parse(result));
+            },
+            child: Text('Real Grade: $actualGrade'),
+          ),
+        ],
+      ),
+    );
   }
 }
